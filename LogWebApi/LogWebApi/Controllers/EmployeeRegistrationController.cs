@@ -11,32 +11,32 @@ namespace LogWebApi.Controllers
     public class EmployeeRegistrationController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage RegisterEmployee( EmployeeRegistrationDTO registrationDTO)
+        public HttpResponseMessage RegisterEmployee(EmployeeRegistrationDTO registrationDTO)
         {
             using (DbEntities entities = new DbEntities())
             {
-                //entities.Configuration.LazyLoadingEnabled = true;
+
                 var checkresults = (from e in entities.Employees
                                     where e.Emp_Name == registrationDTO.Name || e.Emp_Surname == registrationDTO.Surname || e.Emp_Email == registrationDTO.Email
                                     select e).FirstOrDefault();
 
                 if (checkresults != null)
                 {
-                   
-                        EmployeeModel employeeModel = new EmployeeModel
-                        {
-                            ID = checkresults.Emp_No,
-                            Name = checkresults.Emp_Name,
-                            Surname = checkresults.Emp_Surname,
-                            Email = checkresults.Emp_Email,
-                            Contact = checkresults.Emp_Contact,
-                            Position = checkresults.Emp_Position,
-                            Status = checkresults.Emp_Status
-                        };
 
-                        return Request.CreateResponse(HttpStatusCode.Conflict, employeeModel);
-                    
-                   
+                    EmployeeModel employeeModel = new EmployeeModel
+                    {
+                        ID = checkresults.Emp_No,
+                        Name = checkresults.Emp_Name,
+                        Surname = checkresults.Emp_Surname,
+                        Email = checkresults.Emp_Email,
+                        Contact = checkresults.Emp_Contact,
+                        Position = checkresults.Emp_Position,
+                        Status = checkresults.Emp_Status
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.Conflict, employeeModel);
+
+
                 }
                 else
                 {
@@ -84,13 +84,12 @@ namespace LogWebApi.Controllers
                     };
 
                     var message = Request.CreateResponse(HttpStatusCode.Created, userModel);
-                    message.Headers.Location = new Uri(Request.RequestUri +"/"+ userModel.EmployeeID.ToString());
+                    message.Headers.Location = new Uri(Request.RequestUri + "/" + userModel.EmployeeID.ToString());
 
                     return message;
                 }
             }
         }
-
 
     }
 }
