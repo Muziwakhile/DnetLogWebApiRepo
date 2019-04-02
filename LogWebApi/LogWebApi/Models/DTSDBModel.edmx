@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DTSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="client_no" />
+          </Key>
+          <Property Name="client_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Client_address" Type="varchar" MaxLength="50" />
+          <Property Name="client_contact" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client_User">
+          <Key>
+            <PropertyRef Name="client_user_no" />
+          </Key>
+          <Property Name="client_user_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cu_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cu_surname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cu_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cu_contact" Type="bigint" Nullable="false" />
+          <Property Name="cu_username" Type="varchar" MaxLength="20" />
+          <Property Name="cu_password" Type="varchar" MaxLength="20" />
+          <Property Name="client_no" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="com_no" />
+          </Key>
+          <Property Name="com_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="com_description" Type="varchar" MaxLength="50" />
+          <Property Name="com_date" Type="datetime" Nullable="false" />
+          <Property Name="emp_no" Type="int" Nullable="false" />
+          <Property Name="job_no" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emp_Job">
+          <Key>
+            <PropertyRef Name="job_no" />
+            <PropertyRef Name="emp_no" />
+          </Key>
+          <Property Name="job_no" Type="int" Nullable="false" />
+          <Property Name="emp_no" Type="int" Nullable="false" />
+          <Property Name="emp_job_start" Type="datetime" Nullable="false" />
+          <Property Name="emp_job_end" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_No" />
+          </Key>
+          <Property Name="Emp_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Emp_Surname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Emp_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Emp_Contact" Type="bigint" Nullable="false" />
+          <Property Name="Emp_Position" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Emp_Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="job_No" />
+          </Key>
+          <Property Name="job_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="job_title" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="job_description" Type="varchar" MaxLength="50" />
+          <Property Name="job_date" Type="datetime" Nullable="false" />
+          <Property Name="job_attachement" Type="varbinary(max)" />
+          <Property Name="job_status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_user_no" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="users_no" />
+          </Key>
+          <Property Name="users_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="users_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="users_password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="users_level" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Emp_no" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Client_User_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Client_User" Type="Self.Client_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_no" />
+            </Principal>
+            <Dependent Role="Client_User">
+              <PropertyRef Name="client_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Comment">
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Job">
+              <PropertyRef Name="job_no" />
+              <PropertyRef Name="emp_no" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="job_no" />
+              <PropertyRef Name="emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Job_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_No" />
+            </Principal>
+            <Dependent Role="Emp_Job">
+              <PropertyRef Name="emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Job_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="job_No" />
+            </Principal>
+            <Dependent Role="Emp_Job">
+              <PropertyRef Name="job_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Client_User">
+          <End Role="Client_User" Type="Self.Client_User" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client_User">
+              <PropertyRef Name="client_user_no" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="client_user_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_No" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DTSDBModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_User" EntityType="Self.Client_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emp_Job" EntityType="Self.Emp_Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Client_User_Client" Association="Self.FK_Client_User_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Client_User" EntitySet="Client_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Comment" Association="Self.FK_Comment_Comment">
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Job_Employee" Association="Self.FK_Emp_Job_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Job_Job" Association="Self.FK_Emp_Job_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Client_User" Association="Self.FK_Job_Client_User">
+            <End Role="Client_User" EntitySet="Client_User" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Employee" Association="Self.FK_Users_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DTSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="client_no" />
+          </Key>
+          <Property Name="client_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Client_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_contact" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Client_User" Relationship="Self.FK_Client_User_Client" FromRole="Client" ToRole="Client_User" />
+        </EntityType>
+        <EntityType Name="Client_User">
+          <Key>
+            <PropertyRef Name="client_user_no" />
+          </Key>
+          <Property Name="client_user_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cu_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cu_surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cu_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cu_contact" Type="Int64" Nullable="false" />
+          <Property Name="cu_username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cu_password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="client_no" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_User_Client" FromRole="Client_User" ToRole="Client" />
+          <NavigationProperty Name="Jobs" Relationship="Self.FK_Job_Client_User" FromRole="Client_User" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="com_no" />
+          </Key>
+          <Property Name="com_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="com_description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="com_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="emp_no" Type="Int32" Nullable="false" />
+          <Property Name="job_no" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Emp_Job" Relationship="Self.FK_Comment_Comment" FromRole="Comment" ToRole="Emp_Job" />
+        </EntityType>
+        <EntityType Name="Emp_Job">
+          <Key>
+            <PropertyRef Name="job_no" />
+            <PropertyRef Name="emp_no" />
+          </Key>
+          <Property Name="job_no" Type="Int32" Nullable="false" />
+          <Property Name="emp_no" Type="Int32" Nullable="false" />
+          <Property Name="emp_job_start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="emp_job_end" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Comment" FromRole="Emp_Job" ToRole="Comment" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Emp_Job_Employee" FromRole="Emp_Job" ToRole="Employee" />
+          <NavigationProperty Name="Job" Relationship="Self.FK_Emp_Job_Job" FromRole="Emp_Job" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_No" />
+          </Key>
+          <Property Name="Emp_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emp_Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emp_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emp_Contact" Type="Int64" Nullable="false" />
+          <Property Name="Emp_Position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emp_Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Emp_Job" Relationship="Self.FK_Emp_Job_Employee" FromRole="Employee" ToRole="Emp_Job" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Employee" FromRole="Employee" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="job_No" />
+          </Key>
+          <Property Name="job_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="job_title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="job_description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="job_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="job_attachement" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="job_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="client_user_no" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client_User" Relationship="Self.FK_Job_Client_User" FromRole="Job" ToRole="Client_User" />
+          <NavigationProperty Name="Emp_Job" Relationship="Self.FK_Emp_Job_Job" FromRole="Job" ToRole="Emp_Job" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="users_no" />
+          </Key>
+          <Property Name="users_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="users_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="users_password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="users_level" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emp_no" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Users_Employee" FromRole="Users" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Client_User_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Client_User" Type="Self.Client_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_no" />
+            </Principal>
+            <Dependent Role="Client_User">
+              <PropertyRef Name="client_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Client_User">
+          <End Role="Client_User" Type="Self.Client_User" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client_User">
+              <PropertyRef Name="client_user_no" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="client_user_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Comment">
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Job">
+              <PropertyRef Name="job_no" />
+              <PropertyRef Name="emp_no" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="job_no" />
+              <PropertyRef Name="emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Job_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_No" />
+            </Principal>
+            <Dependent Role="Emp_Job">
+              <PropertyRef Name="emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Job_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Emp_Job" Type="Self.Emp_Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="job_No" />
+            </Principal>
+            <Dependent Role="Emp_Job">
+              <PropertyRef Name="job_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_No" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Emp_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Client_User" EntityType="Self.Client_User" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Emp_Job" EntityType="Self.Emp_Job" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Client_User_Client" Association="Self.FK_Client_User_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Client_User" EntitySet="Client_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Client_User" Association="Self.FK_Job_Client_User">
+            <End Role="Client_User" EntitySet="Client_User" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Comment" Association="Self.FK_Comment_Comment">
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Job_Employee" Association="Self.FK_Emp_Job_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Job_Job" Association="Self.FK_Emp_Job_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Emp_Job" EntitySet="Emp_Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Employee" Association="Self.FK_Users_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DTSDBModelStoreContainer" CdmEntityContainer="DbEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DTSDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="client_no" ColumnName="client_no" />
+                <ScalarProperty Name="client_name" ColumnName="client_name" />
+                <ScalarProperty Name="Client_address" ColumnName="Client_address" />
+                <ScalarProperty Name="client_contact" ColumnName="client_contact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client_User">
+            <EntityTypeMapping TypeName="DTSDBModel.Client_User">
+              <MappingFragment StoreEntitySet="Client_User">
+                <ScalarProperty Name="client_user_no" ColumnName="client_user_no" />
+                <ScalarProperty Name="cu_name" ColumnName="cu_name" />
+                <ScalarProperty Name="cu_surname" ColumnName="cu_surname" />
+                <ScalarProperty Name="cu_email" ColumnName="cu_email" />
+                <ScalarProperty Name="cu_contact" ColumnName="cu_contact" />
+                <ScalarProperty Name="cu_username" ColumnName="cu_username" />
+                <ScalarProperty Name="cu_password" ColumnName="cu_password" />
+                <ScalarProperty Name="client_no" ColumnName="client_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="DTSDBModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="com_no" ColumnName="com_no" />
+                <ScalarProperty Name="com_description" ColumnName="com_description" />
+                <ScalarProperty Name="com_date" ColumnName="com_date" />
+                <ScalarProperty Name="emp_no" ColumnName="emp_no" />
+                <ScalarProperty Name="job_no" ColumnName="job_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emp_Job">
+            <EntityTypeMapping TypeName="DTSDBModel.Emp_Job">
+              <MappingFragment StoreEntitySet="Emp_Job">
+                <ScalarProperty Name="job_no" ColumnName="job_no" />
+                <ScalarProperty Name="emp_no" ColumnName="emp_no" />
+                <ScalarProperty Name="emp_job_start" ColumnName="emp_job_start" />
+                <ScalarProperty Name="emp_job_end" ColumnName="emp_job_end" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DTSDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Emp_No" ColumnName="Emp_No" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="Emp_Surname" ColumnName="Emp_Surname" />
+                <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
+                <ScalarProperty Name="Emp_Contact" ColumnName="Emp_Contact" />
+                <ScalarProperty Name="Emp_Position" ColumnName="Emp_Position" />
+                <ScalarProperty Name="Emp_Status" ColumnName="Emp_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="DTSDBModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="job_No" ColumnName="job_No" />
+                <ScalarProperty Name="job_title" ColumnName="job_title" />
+                <ScalarProperty Name="job_description" ColumnName="job_description" />
+                <ScalarProperty Name="job_date" ColumnName="job_date" />
+                <ScalarProperty Name="job_attachement" ColumnName="job_attachement" />
+                <ScalarProperty Name="job_status" ColumnName="job_status" />
+                <ScalarProperty Name="client_user_no" ColumnName="client_user_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DTSDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="users_no" ColumnName="users_no" />
+                <ScalarProperty Name="users_name" ColumnName="users_name" />
+                <ScalarProperty Name="users_password" ColumnName="users_password" />
+                <ScalarProperty Name="users_level" ColumnName="users_level" />
+                <ScalarProperty Name="Emp_no" ColumnName="Emp_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
