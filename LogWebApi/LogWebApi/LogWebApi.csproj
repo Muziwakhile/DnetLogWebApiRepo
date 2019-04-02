@@ -168,6 +168,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\EmployeeRegistrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,6 +201,8 @@
     <Compile Include="Models\Employee.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\EmployeeRegistrationDTO.cs" />
     <Compile Include="Models\Emp_Job.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
@@ -209,6 +212,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

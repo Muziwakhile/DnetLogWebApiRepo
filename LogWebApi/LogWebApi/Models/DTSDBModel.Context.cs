@@ -18,6 +18,7 @@ namespace LogWebApi.Models
         public DbEntities()
             : base("name=DbEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
