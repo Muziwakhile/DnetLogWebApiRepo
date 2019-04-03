@@ -15,29 +15,28 @@ namespace LogWebApi.Controllers
         {
             using (DbEntities entities = new DbEntities())
             {
- 
-                    Client comp = new Client
-                    {
-                        client_name = companyModel.CompanyName,
-                        client_contact = companyModel.Contact,
-                        Client_address = companyModel.Address
-                    };
+                Client comp = new Client
+                {
+                    client_name = companyModel.CompanyName,
+                    client_contact = companyModel.Contact,
+                    Client_address = companyModel.Address
+                };
 
-                    entities.Clients.Add(comp);
-                    entities.SaveChanges();
+                entities.Clients.Add(comp);
+                entities.SaveChanges();
 
-                    companyModel.ID = comp.client_no;
+                companyModel.ID = comp.client_no;
 
-                    var message = Request.CreateResponse(HttpStatusCode.Created,companyModel);
-                    message.Headers.Location = new Uri(Request.RequestUri +"/"+companyModel.ID.ToString());
+                var message = Request.CreateResponse(HttpStatusCode.Created, companyModel);
+                message.Headers.Location = new Uri(Request.RequestUri + "/" + companyModel.ID.ToString());
 
-                    return message;     
+                return message;
             }
         }
 
 
         [HttpGet]
-       public List<CompanyModel> GeAllCompanies()
+        public List<CompanyModel> GeAllCompanies()
         {
             List<CompanyModel> companyList = new List<CompanyModel>();
             using (DbEntities entities = new DbEntities())
@@ -47,7 +46,7 @@ namespace LogWebApi.Controllers
 
                 foreach (var item in companies)
                 {
-                    companyList.Add( new CompanyModel
+                    companyList.Add(new CompanyModel
                     {
                         ID = item.client_no,
                         CompanyName = item.client_name,
@@ -67,8 +66,8 @@ namespace LogWebApi.Controllers
             using (DbEntities entities = new DbEntities())
             {
                 var company = (from c in entities.Clients
-                                 where c.client_no == id
-                                 select c).FirstOrDefault<Client>();
+                               where c.client_no == id
+                               select c).FirstOrDefault<Client>();
                 if (company != null)
                 {
                     CompanyModel companyModel = new CompanyModel
@@ -79,13 +78,13 @@ namespace LogWebApi.Controllers
                         Address = company.Client_address
                     };
 
-                    return Request.CreateResponse(HttpStatusCode.OK,companyModel);
+                    return Request.CreateResponse(HttpStatusCode.OK, companyModel);
                 }
                 else
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, $"Company With ID {id} Was Not Fount");
                 }
- 
+
             }
         }
 
