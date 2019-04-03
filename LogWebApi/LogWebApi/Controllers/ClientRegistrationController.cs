@@ -79,7 +79,7 @@ namespace LogWebApi.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPut]
         public HttpResponseMessage UpdateClientDetails(ClientModel clientModel)
         {
             using (DbEntities entities = new DbEntities())
