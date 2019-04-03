@@ -9,6 +9,9 @@ namespace LogWebApi
     {
         public static void Register(HttpConfiguration config)
         {
+
+            var moreconfig = config.Formatters.JsonFormatter.SerializerSettings;
+            moreconfig.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             // Web API configuration and services
 
             // Web API routes
