@@ -168,6 +168,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AdminCompanyController.cs" />
+    <Compile Include="Controllers\AdminEmployeeLoginController.cs" />
     <Compile Include="Controllers\AdminEmployeeRegistrationController.cs" />
     <Compile Include="Controllers\EmployeeLoginController.cs" />
     <Compile Include="Controllers\EmployeeRegistrationController.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyModel.cs" />
     <Compile Include="Models\DTSDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
