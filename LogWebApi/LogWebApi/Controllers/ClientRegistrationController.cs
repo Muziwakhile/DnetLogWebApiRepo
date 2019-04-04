@@ -104,5 +104,35 @@ namespace LogWebApi.Controllers
                 }
             }
         }
+
+
+        public HttpResponseMessage ClientLogin(string username, string password)
+        {
+            using (DbEntities entities = new DbEntities())
+            {
+                var result = (from c in entities.Client_User
+                              where c.cu_username == username & c.cu_password == password
+                              select c).FirstOrDefault();
+
+                if (result != null)
+                {
+                    ClientModel client = new ClientModel
+                    {
+                        ID = result.client_user_no,
+                        Name = result.cu_name,
+                        Surname = result.cu_surname,
+                        Email = result.cu_email,
+                        Contact = result.cu_contact,
+                        CompanyID = result.client_no
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.OK, client);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Incorrect Username Or Password");
+                }
+            }
+        }
     }
 }
