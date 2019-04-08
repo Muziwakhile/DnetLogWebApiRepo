@@ -105,7 +105,7 @@ namespace LogWebApi.Controllers
             }
         }
 
-
+        [HttpGet]
         public HttpResponseMessage ClientLogin(string username, string password)
         {
             using (DbEntities entities = new DbEntities())
