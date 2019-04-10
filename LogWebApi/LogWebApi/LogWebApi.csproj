@@ -172,10 +172,13 @@
     <Compile Include="Controllers\AdminCompanyController.cs" />
     <Compile Include="Controllers\AdminEmployeeLoginController.cs" />
     <Compile Include="Controllers\AdminEmployeeRegistrationController.cs" />
+    <Compile Include="Controllers\ClientJobController.cs" />
     <Compile Include="Controllers\ClientRegistrationController.cs" />
     <Compile Include="Controllers\EmployeeLoginController.cs" />
     <Compile Include="Controllers\EmployeeRegistrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobAttendanceController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -217,6 +220,10 @@
     <Compile Include="Models\Job.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JobAttendanceDTO.cs" />
+    <Compile Include="Models\JobAttendanceModel.cs" />
+    <Compile Include="Models\JobDTO.cs" />
+    <Compile Include="Models\JobModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
