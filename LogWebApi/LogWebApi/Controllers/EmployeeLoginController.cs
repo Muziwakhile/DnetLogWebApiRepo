@@ -49,7 +49,7 @@ namespace LogWebApi.Controllers
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "User Is Forbideen. Please Contact Administrator");
+                        return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "User Is Forbiden. Please Contact Administrator");
                     }
                 }
                 else

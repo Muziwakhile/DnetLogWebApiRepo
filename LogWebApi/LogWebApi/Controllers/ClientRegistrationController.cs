@@ -123,7 +123,9 @@ namespace LogWebApi.Controllers
                         Surname = result.cu_surname,
                         Email = result.cu_email,
                         Contact = result.cu_contact,
-                        CompanyID = result.client_no
+                        CompanyID = result.client_no,
+                        Username = result.cu_username,
+                        Password = result.cu_password
                     };
 
                     return Request.CreateResponse(HttpStatusCode.OK, client);
