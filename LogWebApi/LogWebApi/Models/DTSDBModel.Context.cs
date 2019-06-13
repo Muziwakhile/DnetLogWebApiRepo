@@ -12,6 +12,8 @@ namespace LogWebApi.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DbEntities : DbContext
     {
@@ -33,5 +35,40 @@ namespace LogWebApi.Models
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<User> Users { get; set; }
+    
+        public virtual ObjectResult<spAllJobs_Result> spAllJobs(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
+        {
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(System.DateTime));
+    
+            var enddateParameter = enddate.HasValue ?
+                new ObjectParameter("enddate", enddate) :
+                new ObjectParameter("enddate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAllJobs_Result>("spAllJobs", startdateParameter, enddateParameter);
+        }
+    
+        public virtual ObjectResult<spDoneJobs_Result> spDoneJobs(string employee_name)
+        {
+            var employee_nameParameter = employee_name != null ?
+                new ObjectParameter("employee_name", employee_name) :
+                new ObjectParameter("employee_name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spDoneJobs_Result>("spDoneJobs", employee_nameParameter);
+        }
+    
+        public virtual ObjectResult<spJobs_Result> spJobs(Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
+        {
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(System.DateTime));
+    
+            var enddateParameter = enddate.HasValue ?
+                new ObjectParameter("enddate", enddate) :
+                new ObjectParameter("enddate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spJobs_Result>("spJobs", startdateParameter, enddateParameter);
+        }
     }
 }

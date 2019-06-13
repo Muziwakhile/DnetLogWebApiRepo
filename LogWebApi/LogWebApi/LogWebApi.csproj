@@ -230,6 +230,15 @@
     <Compile Include="Models\JobAttendanceModel.cs" />
     <Compile Include="Models\JobDTO.cs" />
     <Compile Include="Models\JobModel.cs" />
+    <Compile Include="Models\spAllJobs_Result.cs">
+      <DependentUpon>DTSDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spDoneJobs_Result.cs">
+      <DependentUpon>DTSDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spJobs_Result.cs">
+      <DependentUpon>DTSDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>DTSDBModel.tt</DependentUpon>
     </Compile>
