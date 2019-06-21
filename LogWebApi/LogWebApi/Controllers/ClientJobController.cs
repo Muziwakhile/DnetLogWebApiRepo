@@ -37,6 +37,7 @@ namespace LogWebApi.Controllers
             }
         }
 
+        [HttpGet]
         public List<JobModel> GetAllJobs(int Id)
         {
             List<JobModel> jobList = new List<JobModel>();
