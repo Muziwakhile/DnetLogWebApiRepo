@@ -23,7 +23,7 @@ namespace LogWebApi.Models
         public int job_no { get; set; }
         public int emp_no { get; set; }
         public System.DateTime emp_job_start { get; set; }
-        public System.DateTime emp_job_end { get; set; }
+        public Nullable<System.DateTime> emp_job_end { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
