@@ -11,6 +11,7 @@ namespace LogWebApi.Models
         public int EmployeeID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string Comments { get; set; }
         public string JobStatus { get; set; }
     }
 }
